@@ -97,17 +97,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Red;
             this.label1.Location = new System.Drawing.Point(370, 7);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 16);
+            this.label1.Size = new System.Drawing.Size(58, 16);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Population:";
+            this.label1.Text = "Infected:";
             // 
             // PopulationLabel
             // 
             this.PopulationLabel.AutoSize = true;
             this.PopulationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PopulationLabel.Location = new System.Drawing.Point(448, 7);
+            this.PopulationLabel.ForeColor = System.Drawing.Color.Red;
+            this.PopulationLabel.Location = new System.Drawing.Point(452, 7);
             this.PopulationLabel.Name = "PopulationLabel";
             this.PopulationLabel.Size = new System.Drawing.Size(15, 16);
             this.PopulationLabel.TabIndex = 10;
@@ -157,6 +159,7 @@
             // 
             // ExportPopDataBtn
             // 
+            this.ExportPopDataBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExportPopDataBtn.Location = new System.Drawing.Point(203, 36);
             this.ExportPopDataBtn.Name = "ExportPopDataBtn";
             this.ExportPopDataBtn.Size = new System.Drawing.Size(164, 23);
@@ -168,7 +171,8 @@
             // 
             this.TcycleCoincidenceLbl.AutoSize = true;
             this.TcycleCoincidenceLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TcycleCoincidenceLbl.Location = new System.Drawing.Point(500, 47);
+            this.TcycleCoincidenceLbl.ForeColor = System.Drawing.Color.Green;
+            this.TcycleCoincidenceLbl.Location = new System.Drawing.Point(452, 47);
             this.TcycleCoincidenceLbl.Name = "TcycleCoincidenceLbl";
             this.TcycleCoincidenceLbl.Size = new System.Drawing.Size(15, 16);
             this.TcycleCoincidenceLbl.TabIndex = 16;
@@ -178,17 +182,19 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Green;
             this.label6.Location = new System.Drawing.Point(370, 47);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(132, 16);
+            this.label6.Size = new System.Drawing.Size(79, 16);
             this.label6.TabIndex = 15;
-            this.label6.Text = "T-cycle coincidence:";
+            this.label6.Text = "Recovered:";
             // 
             // AveragePopulationLbl
             // 
             this.AveragePopulationLbl.AutoSize = true;
             this.AveragePopulationLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AveragePopulationLbl.Location = new System.Drawing.Point(500, 27);
+            this.AveragePopulationLbl.ForeColor = System.Drawing.Color.Blue;
+            this.AveragePopulationLbl.Location = new System.Drawing.Point(452, 27);
             this.AveragePopulationLbl.Name = "AveragePopulationLbl";
             this.AveragePopulationLbl.Size = new System.Drawing.Size(15, 16);
             this.AveragePopulationLbl.TabIndex = 14;
@@ -198,11 +204,12 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Blue;
             this.label4.Location = new System.Drawing.Point(370, 27);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(132, 16);
+            this.label4.Size = new System.Drawing.Size(82, 16);
             this.label4.TabIndex = 13;
-            this.label4.Text = "Average  population:";
+            this.label4.Text = "Susceptible:";
             // 
             // Control_Label
             // 
