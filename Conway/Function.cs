@@ -29,6 +29,8 @@ namespace Conway
         public decimal epsilon = 0.0m;
         public decimal nu = 0.0m;
         public decimal omega = 0.0m;
+        public decimal alfa = 0.0m;
+        public decimal mu = 0.0m;
         bool initFromImage = false;
         public Function(Form1 form)
         {
@@ -74,7 +76,9 @@ namespace Conway
                     scale = Convert.ToInt32(scaletb.Text);
                     epsilon = Convert.ToDecimal(EpsilonTB.Text);
                     nu = Convert.ToDecimal(NuTB.Text);
+                    alfa = Convert.ToDecimal(alfaTB.Text);
                     omega = Convert.ToDecimal(OmegaTB.Text);
+                    mu = Convert.ToDecimal(muTB.Text);
                     //allCellf = new AllCellsFunc(funcParsing.FunctionForAllParsed("return 4 * (1 - 0.05m * y) * x * (1 - x);"));
 
                     ok.Enabled = true;

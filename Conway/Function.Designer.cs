@@ -58,6 +58,10 @@
             this.NuTB = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.OmegaTB = new System.Windows.Forms.TextBox();
+            this.alfaTBvbn = new System.Windows.Forms.Label();
+            this.alfaTB = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.muTB = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.commonAnalyticalCABindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cellularAutomataDataSet)).BeginInit();
@@ -263,7 +267,7 @@
             this.weightsLbl.AutoSize = true;
             this.weightsLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.weightsLbl.ForeColor = System.Drawing.Color.Red;
-            this.weightsLbl.Location = new System.Drawing.Point(19, 247);
+            this.weightsLbl.Location = new System.Drawing.Point(19, 283);
             this.weightsLbl.Name = "weightsLbl";
             this.weightsLbl.Size = new System.Drawing.Size(0, 16);
             this.weightsLbl.TabIndex = 17;
@@ -274,6 +278,7 @@
             this.EpsilonTB.Name = "EpsilonTB";
             this.EpsilonTB.Size = new System.Drawing.Size(38, 20);
             this.EpsilonTB.TabIndex = 18;
+            this.EpsilonTB.Text = "0";
             // 
             // label6
             // 
@@ -299,11 +304,12 @@
             this.NuTB.Name = "NuTB";
             this.NuTB.Size = new System.Drawing.Size(38, 20);
             this.NuTB.TabIndex = 20;
+            this.NuTB.Text = "0";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(236, 188);
+            this.label8.Location = new System.Drawing.Point(236, 217);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(41, 13);
             this.label8.TabIndex = 23;
@@ -311,16 +317,55 @@
             // 
             // OmegaTB
             // 
-            this.OmegaTB.Location = new System.Drawing.Point(192, 185);
+            this.OmegaTB.Location = new System.Drawing.Point(192, 214);
             this.OmegaTB.Name = "OmegaTB";
             this.OmegaTB.Size = new System.Drawing.Size(38, 20);
             this.OmegaTB.TabIndex = 22;
+            this.OmegaTB.Text = "0";
+            // 
+            // alfaTBvbn
+            // 
+            this.alfaTBvbn.AutoSize = true;
+            this.alfaTBvbn.Location = new System.Drawing.Point(235, 189);
+            this.alfaTBvbn.Name = "alfaTBvbn";
+            this.alfaTBvbn.Size = new System.Drawing.Size(25, 13);
+            this.alfaTBvbn.TabIndex = 25;
+            this.alfaTBvbn.Text = "Alfa";
+            // 
+            // alfaTB
+            // 
+            this.alfaTB.Location = new System.Drawing.Point(191, 186);
+            this.alfaTB.Name = "alfaTB";
+            this.alfaTB.Size = new System.Drawing.Size(38, 20);
+            this.alfaTB.TabIndex = 24;
+            this.alfaTB.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(235, 244);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(22, 13);
+            this.label9.TabIndex = 27;
+            this.label9.Text = "Mu";
+            // 
+            // muTB
+            // 
+            this.muTB.Location = new System.Drawing.Point(191, 241);
+            this.muTB.Name = "muTB";
+            this.muTB.Size = new System.Drawing.Size(38, 20);
+            this.muTB.TabIndex = 26;
+            this.muTB.Text = "0";
             // 
             // Function
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 282);
+            this.ClientSize = new System.Drawing.Size(467, 315);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.muTB);
+            this.Controls.Add(this.alfaTBvbn);
+            this.Controls.Add(this.alfaTB);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.OmegaTB);
             this.Controls.Add(this.label7);
@@ -387,5 +432,9 @@
         private System.Windows.Forms.TextBox NuTB;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox OmegaTB;
+        private System.Windows.Forms.Label alfaTBvbn;
+        private System.Windows.Forms.TextBox alfaTB;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox muTB;
     }
 }
