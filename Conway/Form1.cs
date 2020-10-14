@@ -91,8 +91,8 @@ namespace Conway
 
             return new CellStateVectorVM()
             {
-                Infected = (1 - f.epsilon) * array[i, j].Infected + (f.nu -1) * array[i, j].Susceptible * (f.omega*array[i, j].Infected + (1- f.omega)*  infectedWithNeighbours),
-                Susceptible = array[i, j].Susceptible - f.nu * array[i, j].Susceptible * (f.omega*array[i, j].Infected - (1 - f.omega) * infectedWithNeighbours),
+                Infected = (1 - f.epsilon) * array[i, j].Infected + array[i, j].Susceptible * (f.nu * array[i, j].Infected + (1 - f.nu) * infectedWithNeighbours),
+                Susceptible = array[i, j].Susceptible - array[i, j].Susceptible * (f.nu * array[i, j].Infected - (1 - f.nu) * infectedWithNeighbours),
                 Recovered = array[i, j].Recovered + f.epsilon * array[i, j].Infected
             }; 
         }
@@ -160,9 +160,14 @@ namespace Conway
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + 2 * WidthField) * scale + 20, (i + HeightField) * scale + 10, scale, scale);
                 }
             }
-            flagGraphics.DrawString($"Infected: {InfectedCount.ToString()}", new Font("Microsoft Sans Serif", 10, FontStyle.Regular, GraphicsUnit.Point), new SolidBrush(Color.Red), scale, (2 * HeightField) * scale + 20);
-            flagGraphics.DrawString($"Susceptible: {SusceptibleCount.ToString()}", new Font("Microsoft Sans Serif", 10, FontStyle.Regular, GraphicsUnit.Point), new SolidBrush(Color.Blue), (WidthField) * scale + 10, (2 * HeightField) * scale + 20);
-            flagGraphics.DrawString($"Recovered: {RecoveredCount.ToString()}", new Font("Microsoft Sans Serif", 10, FontStyle.Regular, GraphicsUnit.Point), new SolidBrush(Color.Green), (2 * WidthField) * scale + 20, (2 * HeightField) * scale + 20);
+          
+            PopulationLabel.Text = InfectedCount.ToString();
+            AveragePopulationLbl.Text= SusceptibleCount.ToString();
+            TcycleCoincidenceLbl.Text = RecoveredCount.ToString();
+
+            //flagGraphics.DrawString($"Infected: {InfectedCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Red), scale, (2 * HeightField) * scale + 20);
+            //flagGraphics.DrawString($"Susceptible: {SusceptibleCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Blue), scale, (2 * HeightField) * scale + 40);
+            //flagGraphics.DrawString($"Recovered: {RecoveredCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Green), scale, (2 * HeightField) * scale + 60);
 
 
             pictureBox1.Image = myAutomataField;           
