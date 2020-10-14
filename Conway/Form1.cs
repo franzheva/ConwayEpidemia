@@ -86,13 +86,12 @@ namespace Conway
                         innerCode[3] * array[i, (j + 1) != WidthField ? (j + 1) : 0].Infected +
                         innerCode[6] * array[(i + 1) != HeightField ? (i + 1) : 0, (j - 1) != -1 ? (j - 1) : (WidthField - 1)].Infected +
                         innerCode[5] * array[(i + 1) != HeightField ? (i + 1) : 0, j].Infected +
-                        innerCode[4] * array[(i + 1) != HeightField ? (i + 1) : 0, (j + 1) != WidthField ? (j + 1) : 0].Infected +
-                        innerCode[8] == 0 ? array[i, j].Infected : innerCode[8] * array[i, j].Infected;
+                        innerCode[4] * array[(i + 1) != HeightField ? (i + 1) : 0, (j + 1) != WidthField ? (j + 1) : 0].Infected;
 
             return new CellStateVectorVM()
             {
-                Infected = (1 - f.epsilon) * array[i, j].Infected + array[i, j].Susceptible * (f.nu * array[i, j].Infected + (1 - f.nu) * infectedWithNeighbours),
-                Susceptible = array[i, j].Susceptible - array[i, j].Susceptible * (f.nu * array[i, j].Infected - (1 - f.nu) * infectedWithNeighbours),
+                Infected = (1 - f.epsilon) * array[i, j].Infected + f.nu * array[i, j].Susceptible * (0.5m* array[i, j].Infected + 0.5m  * infectedWithNeighbours),
+                Susceptible = array[i, j].Susceptible - f.nu * array[i, j].Susceptible * (0.5m *array[i, j].Infected + 0.5m * infectedWithNeighbours),
                 Recovered = array[i, j].Recovered + f.epsilon * array[i, j].Infected
             }; 
         }
@@ -165,6 +164,13 @@ namespace Conway
             AveragePopulationLbl.Text= SusceptibleCount.ToString();
             TcycleCoincidenceLbl.Text = RecoveredCount.ToString();
 
+            var commonRate = InfectedCount + SusceptibleCount + RecoveredCount;
+            if (commonRate != 0)
+            {
+                InfectedRateLbl.Text = $"{InfectedCount * 100 / commonRate}%";
+                SusceptibleRateLbl.Text = $"{SusceptibleCount * 100 / commonRate}%";
+                RecoveredRateLbl.Text = $"{RecoveredCount * 100 / commonRate}%";
+            }
             //flagGraphics.DrawString($"Infected: {InfectedCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Red), scale, (2 * HeightField) * scale + 20);
             //flagGraphics.DrawString($"Susceptible: {SusceptibleCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Blue), scale, (2 * HeightField) * scale + 40);
             //flagGraphics.DrawString($"Recovered: {RecoveredCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Green), scale, (2 * HeightField) * scale + 60);

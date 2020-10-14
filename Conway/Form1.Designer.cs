@@ -46,6 +46,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.Control_Label = new System.Windows.Forms.Label();
             this.DrawingPanel = new System.Windows.Forms.Panel();
+            this.RecoveredRateLbl = new System.Windows.Forms.Label();
+            this.SusceptibleRateLbl = new System.Windows.Forms.Label();
+            this.InfectedRateLbl = new System.Windows.Forms.Label();
             this.PanelForSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,7 +112,7 @@
             this.PopulationLabel.AutoSize = true;
             this.PopulationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PopulationLabel.ForeColor = System.Drawing.Color.Red;
-            this.PopulationLabel.Location = new System.Drawing.Point(452, 7);
+            this.PopulationLabel.Location = new System.Drawing.Point(474, 7);
             this.PopulationLabel.Name = "PopulationLabel";
             this.PopulationLabel.Size = new System.Drawing.Size(15, 16);
             this.PopulationLabel.TabIndex = 10;
@@ -138,6 +141,9 @@
             // PanelForSettings
             // 
             this.PanelForSettings.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.PanelForSettings.Controls.Add(this.RecoveredRateLbl);
+            this.PanelForSettings.Controls.Add(this.SusceptibleRateLbl);
+            this.PanelForSettings.Controls.Add(this.InfectedRateLbl);
             this.PanelForSettings.Controls.Add(this.ExportPopDataBtn);
             this.PanelForSettings.Controls.Add(this.TcycleCoincidenceLbl);
             this.PanelForSettings.Controls.Add(this.label6);
@@ -172,7 +178,7 @@
             this.TcycleCoincidenceLbl.AutoSize = true;
             this.TcycleCoincidenceLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TcycleCoincidenceLbl.ForeColor = System.Drawing.Color.Green;
-            this.TcycleCoincidenceLbl.Location = new System.Drawing.Point(452, 47);
+            this.TcycleCoincidenceLbl.Location = new System.Drawing.Point(474, 47);
             this.TcycleCoincidenceLbl.Name = "TcycleCoincidenceLbl";
             this.TcycleCoincidenceLbl.Size = new System.Drawing.Size(15, 16);
             this.TcycleCoincidenceLbl.TabIndex = 16;
@@ -194,7 +200,7 @@
             this.AveragePopulationLbl.AutoSize = true;
             this.AveragePopulationLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AveragePopulationLbl.ForeColor = System.Drawing.Color.Blue;
-            this.AveragePopulationLbl.Location = new System.Drawing.Point(452, 27);
+            this.AveragePopulationLbl.Location = new System.Drawing.Point(474, 27);
             this.AveragePopulationLbl.Name = "AveragePopulationLbl";
             this.AveragePopulationLbl.Size = new System.Drawing.Size(15, 16);
             this.AveragePopulationLbl.TabIndex = 14;
@@ -228,6 +234,39 @@
             this.DrawingPanel.Name = "DrawingPanel";
             this.DrawingPanel.Size = new System.Drawing.Size(740, 381);
             this.DrawingPanel.TabIndex = 14;
+            // 
+            // RecoveredRateLbl
+            // 
+            this.RecoveredRateLbl.AutoSize = true;
+            this.RecoveredRateLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RecoveredRateLbl.ForeColor = System.Drawing.Color.Green;
+            this.RecoveredRateLbl.Location = new System.Drawing.Point(446, 47);
+            this.RecoveredRateLbl.Name = "RecoveredRateLbl";
+            this.RecoveredRateLbl.Size = new System.Drawing.Size(15, 16);
+            this.RecoveredRateLbl.TabIndex = 20;
+            this.RecoveredRateLbl.Text = "0";
+            // 
+            // SusceptibleRateLbl
+            // 
+            this.SusceptibleRateLbl.AutoSize = true;
+            this.SusceptibleRateLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SusceptibleRateLbl.ForeColor = System.Drawing.Color.Blue;
+            this.SusceptibleRateLbl.Location = new System.Drawing.Point(446, 27);
+            this.SusceptibleRateLbl.Name = "SusceptibleRateLbl";
+            this.SusceptibleRateLbl.Size = new System.Drawing.Size(15, 16);
+            this.SusceptibleRateLbl.TabIndex = 19;
+            this.SusceptibleRateLbl.Text = "0";
+            // 
+            // InfectedRateLbl
+            // 
+            this.InfectedRateLbl.AutoSize = true;
+            this.InfectedRateLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InfectedRateLbl.ForeColor = System.Drawing.Color.Red;
+            this.InfectedRateLbl.Location = new System.Drawing.Point(446, 7);
+            this.InfectedRateLbl.Name = "InfectedRateLbl";
+            this.InfectedRateLbl.Size = new System.Drawing.Size(15, 16);
+            this.InfectedRateLbl.TabIndex = 18;
+            this.InfectedRateLbl.Text = "0";
             // 
             // Form1
             // 
@@ -266,6 +305,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ExportPopDataBtn;
         private System.Windows.Forms.Label Control_Label;
+        private System.Windows.Forms.Label RecoveredRateLbl;
+        private System.Windows.Forms.Label SusceptibleRateLbl;
+        private System.Windows.Forms.Label InfectedRateLbl;
     }
 }
 
