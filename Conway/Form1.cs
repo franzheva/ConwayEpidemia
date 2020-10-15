@@ -87,12 +87,12 @@ namespace Conway
                         innerCode[6] * array[(i + 1) != HeightField ? (i + 1) : 0, (j - 1) != -1 ? (j - 1) : (WidthField - 1)].Infected +
                         innerCode[5] * array[(i + 1) != HeightField ? (i + 1) : 0, j].Infected +
                         innerCode[4] * array[(i + 1) != HeightField ? (i + 1) : 0, (j + 1) != WidthField ? (j + 1) : 0].Infected;
-
+            var infectedSusceptible = f.nu * array[i, j].Susceptible * (f.alfa * array[i, j].Infected + (1 - f.alfa) * infectedWithNeighbours);
             return new CellStateVectorVM()
             {
-                Infected = (1 - f.epsilon) * array[i, j].Infected + f.nu * array[i, j].Susceptible * (0.5m* array[i, j].Infected + 0.5m  * infectedWithNeighbours),
-                Susceptible = array[i, j].Susceptible - f.nu * array[i, j].Susceptible * (0.5m *array[i, j].Infected + 0.5m * infectedWithNeighbours),
-                Recovered = array[i, j].Recovered + f.epsilon * array[i, j].Infected
+                Infected = (1 - f.epsilon) * array[i, j].Infected + infectedSusceptible,
+                Susceptible = array[i, j].Susceptible + f.mu* array[i, j].Recovered - infectedSusceptible,
+                Recovered = (1-f.mu)*array[i, j].Recovered + f.epsilon * array[i, j].Infected
             }; 
         }
         public decimal Func(decimal y, decimal x)
@@ -160,9 +160,9 @@ namespace Conway
                 }
             }
           
-            PopulationLabel.Text = InfectedCount.ToString();
-            AveragePopulationLbl.Text= SusceptibleCount.ToString();
-            TcycleCoincidenceLbl.Text = RecoveredCount.ToString();
+            //PopulationLabel.Text = InfectedCount.ToString();
+            //AveragePopulationLbl.Text= SusceptibleCount.ToString();
+            //TcycleCoincidenceLbl.Text = RecoveredCount.ToString();
 
             var commonRate = InfectedCount + SusceptibleCount + RecoveredCount;
             if (commonRate != 0)
@@ -178,6 +178,22 @@ namespace Conway
 
             pictureBox1.Image = myAutomataField;           
         }
+        public CellStateVectorVM[,] FeedbackControl()
+        {
+            var div = 3.0m;
+            var recalc = new CellStateVectorVM[f.HeightImg, f.WidthImg];
+            for (int i = 0; i < f.HeightImg; i++)
+                for (int j = 0; j < f.WidthImg; j++)
+                {
+                    recalc[i, j] = new CellStateVectorVM()
+                    {
+                        Infected = (2 / div) * Cell[N1][i, j].Infected + (1 / div) * Cell[N1 - 1][i, j].Infected,
+                        Susceptible = (2 / div) * Cell[N1][i, j].Susceptible + (1 / div) * Cell[N1 - 1][i, j].Susceptible,
+                        Recovered = (2 / div) * Cell[N1][i, j].Recovered + (1 / div) * Cell[N1 - 1][i, j].Recovered
+                    };
+                }
+            return recalc;
+        }
         private void funcSet_Click(object sender, EventArgs e)
         {
             startTimerButton.Enabled = true;           
@@ -188,8 +204,8 @@ namespace Conway
         {
             HeightField = f.HeightImg;
             WidthField = f.WidthImg;
-            
-            Cell.Add(Epidemia(Cell[N1]));
+            var arrayToRecalculate = isControl && N1>2 ? FeedbackControl() : Cell[N1];
+            Cell.Add(Epidemia(arrayToRecalculate));
             
             N1 += 1;
             iteration += 1;
