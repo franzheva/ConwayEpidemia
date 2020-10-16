@@ -20,6 +20,7 @@ namespace Conway
         public decimal InfectedCount = 0.0m;
         public decimal SusceptibleCount = 0.0m;
         public decimal RecoveredCount = 0.0m;
+        public int infectedCells = 0;
 
         Function f;
         public int N1 = 0;        
@@ -53,6 +54,7 @@ namespace Conway
            InfectedCount = 0.0m;
            SusceptibleCount = 0.0m;
            RecoveredCount = 0.0m;
+            infectedCells = 0;
             //Algorithm of Cellular Automata Game 2D
             HeightField = f.HeightImg;
             WidthField = f.WidthImg;
@@ -71,7 +73,10 @@ namespace Conway
 
             for (int i = 0; i < HeightField; i++)
                 for (int j = 0; j < WidthField; j++)
-                    epidemiaRecalcStart[i, j] = ArrayRecalculated(i, j, weightCoefficient, ArrayStart);          
+                {
+                    epidemiaRecalcStart[i, j] = ArrayRecalculated(i, j, weightCoefficient, ArrayStart);
+                    infectedCells += epidemiaRecalcStart[i, j].Infected != 0 ? 1 : 0;
+                }         
 
             return epidemiaRecalcStart;
         }       
@@ -87,6 +92,7 @@ namespace Conway
                         innerCode[6] * array[(i + 1) != HeightField ? (i + 1) : 0, (j - 1) != -1 ? (j - 1) : (WidthField - 1)].Infected +
                         innerCode[5] * array[(i + 1) != HeightField ? (i + 1) : 0, j].Infected +
                         innerCode[4] * array[(i + 1) != HeightField ? (i + 1) : 0, (j + 1) != WidthField ? (j + 1) : 0].Infected;
+
             var infectedSusceptible = f.nu * array[i, j].Susceptible * (f.alfa * array[i, j].Infected + (1 - f.alfa) * infectedWithNeighbours);
             return new CellStateVectorVM()
             {
@@ -103,6 +109,7 @@ namespace Conway
         }       
         public void SetInitial()
         {
+            infectedCells = 0;
             SetInit = new CellStateVectorVM[f.HeightImg, f.WidthImg];
             Random rand = new Random();
 
@@ -115,11 +122,16 @@ namespace Conway
                     do { I = (Convert.ToDecimal(rand.Next(100)) + 1) / 101; } while (S + I >= 1);
                     SetInit[i, j] = new CellStateVectorVM()
                     {
-                        Susceptible = S * population,
-                        Infected = I * population,
-                        Recovered = (1 - S - I) * population
+                        Susceptible = population,//S * population,
+                        Infected =0,// I * population,
+                        Recovered = 0//(1 - S - I) * population
                     };
-                }            
+                }
+            SetInit[f.HeightImg / 2, f.WidthImg / 2] = new CellStateVectorVM()
+            {
+                Infected = 0.01m * SetInit[f.HeightImg / 2, f.WidthImg / 2].Susceptible,
+                Susceptible = 0.99m * SetInit[f.HeightImg / 2, f.WidthImg / 2].Susceptible
+            };       
         }        
         public void SetInitialFromImage(CellStateVectorVM [,] init)
         {
@@ -171,6 +183,7 @@ namespace Conway
                 SusceptibleRateLbl.Text = $"{SusceptibleCount * 100 / commonRate}%";
                 RecoveredRateLbl.Text = $"{RecoveredCount * 100 / commonRate}%";
             }
+            infectedCellsTB.Text = infectedCells.ToString();
             //flagGraphics.DrawString($"Infected: {InfectedCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Red), scale, (2 * HeightField) * scale + 20);
             //flagGraphics.DrawString($"Susceptible: {SusceptibleCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Blue), scale, (2 * HeightField) * scale + 40);
             //flagGraphics.DrawString($"Recovered: {RecoveredCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Green), scale, (2 * HeightField) * scale + 60);

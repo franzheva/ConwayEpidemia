@@ -49,6 +49,8 @@
             this.RecoveredRateLbl = new System.Windows.Forms.Label();
             this.SusceptibleRateLbl = new System.Windows.Forms.Label();
             this.InfectedRateLbl = new System.Windows.Forms.Label();
+            this.infectedCellsTB = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.PanelForSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -114,9 +116,8 @@
             this.PopulationLabel.ForeColor = System.Drawing.Color.Red;
             this.PopulationLabel.Location = new System.Drawing.Point(474, 7);
             this.PopulationLabel.Name = "PopulationLabel";
-            this.PopulationLabel.Size = new System.Drawing.Size(15, 16);
+            this.PopulationLabel.Size = new System.Drawing.Size(0, 16);
             this.PopulationLabel.TabIndex = 10;
-            this.PopulationLabel.Text = "0";
             // 
             // IterationLabel
             // 
@@ -141,6 +142,8 @@
             // PanelForSettings
             // 
             this.PanelForSettings.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.PanelForSettings.Controls.Add(this.infectedCellsTB);
+            this.PanelForSettings.Controls.Add(this.label5);
             this.PanelForSettings.Controls.Add(this.RecoveredRateLbl);
             this.PanelForSettings.Controls.Add(this.SusceptibleRateLbl);
             this.PanelForSettings.Controls.Add(this.InfectedRateLbl);
@@ -160,7 +163,7 @@
             this.PanelForSettings.Controls.Add(this.label1);
             this.PanelForSettings.Location = new System.Drawing.Point(0, 0);
             this.PanelForSettings.Name = "PanelForSettings";
-            this.PanelForSettings.Size = new System.Drawing.Size(740, 75);
+            this.PanelForSettings.Size = new System.Drawing.Size(740, 104);
             this.PanelForSettings.TabIndex = 13;
             // 
             // ExportPopDataBtn
@@ -180,9 +183,8 @@
             this.TcycleCoincidenceLbl.ForeColor = System.Drawing.Color.Green;
             this.TcycleCoincidenceLbl.Location = new System.Drawing.Point(474, 47);
             this.TcycleCoincidenceLbl.Name = "TcycleCoincidenceLbl";
-            this.TcycleCoincidenceLbl.Size = new System.Drawing.Size(15, 16);
+            this.TcycleCoincidenceLbl.Size = new System.Drawing.Size(0, 16);
             this.TcycleCoincidenceLbl.TabIndex = 16;
-            this.TcycleCoincidenceLbl.Text = "0";
             // 
             // label6
             // 
@@ -202,9 +204,8 @@
             this.AveragePopulationLbl.ForeColor = System.Drawing.Color.Blue;
             this.AveragePopulationLbl.Location = new System.Drawing.Point(474, 27);
             this.AveragePopulationLbl.Name = "AveragePopulationLbl";
-            this.AveragePopulationLbl.Size = new System.Drawing.Size(15, 16);
+            this.AveragePopulationLbl.Size = new System.Drawing.Size(0, 16);
             this.AveragePopulationLbl.TabIndex = 14;
-            this.AveragePopulationLbl.Text = "0";
             // 
             // label4
             // 
@@ -230,9 +231,9 @@
             // 
             // DrawingPanel
             // 
-            this.DrawingPanel.Location = new System.Drawing.Point(3, 81);
+            this.DrawingPanel.Location = new System.Drawing.Point(3, 110);
             this.DrawingPanel.Name = "DrawingPanel";
-            this.DrawingPanel.Size = new System.Drawing.Size(740, 381);
+            this.DrawingPanel.Size = new System.Drawing.Size(740, 352);
             this.DrawingPanel.TabIndex = 14;
             // 
             // RecoveredRateLbl
@@ -267,6 +268,28 @@
             this.InfectedRateLbl.Size = new System.Drawing.Size(15, 16);
             this.InfectedRateLbl.TabIndex = 18;
             this.InfectedRateLbl.Text = "0";
+            // 
+            // infectedCellsTB
+            // 
+            this.infectedCellsTB.AutoSize = true;
+            this.infectedCellsTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infectedCellsTB.ForeColor = System.Drawing.Color.Red;
+            this.infectedCellsTB.Location = new System.Drawing.Point(511, 73);
+            this.infectedCellsTB.Name = "infectedCellsTB";
+            this.infectedCellsTB.Size = new System.Drawing.Size(15, 16);
+            this.infectedCellsTB.TabIndex = 22;
+            this.infectedCellsTB.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(370, 73);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(137, 16);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "Infected cells number:";
             // 
             // Form1
             // 
@@ -308,6 +331,8 @@
         private System.Windows.Forms.Label RecoveredRateLbl;
         private System.Windows.Forms.Label SusceptibleRateLbl;
         private System.Windows.Forms.Label InfectedRateLbl;
+        private System.Windows.Forms.Label infectedCellsTB;
+        private System.Windows.Forms.Label label5;
     }
 }
 
