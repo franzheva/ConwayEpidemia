@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ClosedXML.Excel;
 using System.Windows.Forms;
 
 namespace Conway
@@ -137,7 +132,7 @@ namespace Conway
         {
             if (initFromImage)
             {
-                MessageBox.Show("Initial Data uploaded from image will be applied");
+                MessageBox.Show("Initial Data uploaded from File will be applied");
             }
             else
             {
@@ -188,8 +183,7 @@ namespace Conway
         public void ImageData(string path)
         {
             if (path != "")
-            {
-               
+            {               
                 var image = new Bitmap(path);
                 HeightImg = image.Height;
                 WidthImg = image.Width;
@@ -211,7 +205,45 @@ namespace Conway
                         };
                     
 
-                mainForm.SetInitialFromImage(initData);
+                mainForm.SetInitialFromFile(initData);
+                initFromImage = true;
+            }
+        }
+        public void FileInitData(string path)
+        {
+            if (path != "")
+            {
+                
+                var fileData = new XLWorkbook(path).Worksheet(1);
+                var range = fileData.Range(fileData.FirstCellUsed(), fileData.LastCellUsed());
+                HeightImg = range.RowCount() - 1;
+                WidthImg = range.ColumnCount();
+                var initData = new CellStateVectorVM[HeightImg, WidthImg];
+                var i = 0;
+                foreach (var item in range.Rows())
+                {
+                    if (i != 0) {
+                        for (int j = 1; j <= WidthImg; j++)
+                        {
+                            var val = item.Cell(j).Value.ToString().Split('|');
+                            initData[i-1, j-1] = new CellStateVectorVM()
+                            {
+                                Susceptible = Convert.ToDecimal(val[0]),
+                                Infected = Convert.ToDecimal(val[1]),
+                                Recovered = Convert.ToDecimal(val[2])
+                            };
+                        }
+                    }
+                    
+                    i++;
+                }
+                fieldsizeHeighttb.Text = HeightImg.ToString();
+                fieldsizeHeighttb.ReadOnly = true;
+                fieldsizeWidthtb.Text = WidthImg.ToString();
+                fieldsizeWidthtb.ReadOnly = true;
+                scale = 1;
+                scaletb.Text = scale.ToString();
+                mainForm.SetInitialFromFile(initData);
                 initFromImage = true;
             }
         }
@@ -240,6 +272,48 @@ namespace Conway
                 currentSeparate = false;
 
             }
+        }
+        private void GenerateTxtFileData_Click(object sender, EventArgs e)
+        {
+            if (fieldsizeHeighttb.Text != "" && fieldsizeHeighttb.Text != "Height" && fieldsizeWidthtb.Text != "Width" && fieldsizeWidthtb.Text != "" && scaletb.Text != "")
+            {
+                var uiValidation = 0.0m;
+                for (int p = 0; p < 9; p++)
+                {
+                    if (tb[p].Text != "")
+
+                        innerParameters[p] = Convert.ToDecimal(tb[p].Text);
+
+                    else
+                        innerParameters[p] = p == 8 ? 1 : 0;
+                    uiValidation += innerParameters[p];
+                }
+                if (uiValidation == 1)
+                    tb[8].Text = "1";
+                HeightImg = Convert.ToInt32(fieldsizeHeighttb.Text);
+                WidthImg = Convert.ToInt32(fieldsizeWidthtb.Text);
+                scale = Convert.ToInt32(scaletb.Text);
+                epsilon = Convert.ToDecimal(EpsilonTB.Text);
+                nu = Convert.ToDecimal(NuTB.Text);
+                alfa = Convert.ToDecimal(alfaTB.Text);
+                omega = Convert.ToDecimal(OmegaTB.Text);
+                mu = Convert.ToDecimal(muTB.Text);                
+                mainForm.SetInitial();
+                mainForm.WriteLog(mainForm.SetInit);
+                ok.Enabled = true;
+                weightsLbl.ForeColor = Color.Green;
+                weightsLbl.Text = "Data set is completed. Press OK to continue";
+            }
+            else {
+                Validation();
+            }
+        }
+        private void UploadFromXLS_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            var dialogResult = openFileDialog.ShowDialog();
+            if (dialogResult != DialogResult.OK) return;
+            FileInitData(Upload(openFileDialog.FileName));
         }
     }    
 }

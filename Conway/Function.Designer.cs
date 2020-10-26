@@ -62,6 +62,8 @@
             this.alfaTB = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.muTB = new System.Windows.Forms.TextBox();
+            this.GenerateTxtFileData = new System.Windows.Forms.Button();
+            this.UploadFromXLS = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.commonAnalyticalCABindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cellularAutomataDataSet)).BeginInit();
@@ -357,11 +359,33 @@
             this.muTB.TabIndex = 26;
             this.muTB.Text = "0";
             // 
+            // GenerateTxtFileData
+            // 
+            this.GenerateTxtFileData.Location = new System.Drawing.Point(295, 238);
+            this.GenerateTxtFileData.Name = "GenerateTxtFileData";
+            this.GenerateTxtFileData.Size = new System.Drawing.Size(161, 33);
+            this.GenerateTxtFileData.TabIndex = 28;
+            this.GenerateTxtFileData.Text = "Generate init data file";
+            this.GenerateTxtFileData.UseVisualStyleBackColor = true;
+            this.GenerateTxtFileData.Click += new System.EventHandler(this.GenerateTxtFileData_Click);
+            // 
+            // UploadFromXLS
+            // 
+            this.UploadFromXLS.Location = new System.Drawing.Point(294, 277);
+            this.UploadFromXLS.Name = "UploadFromXLS";
+            this.UploadFromXLS.Size = new System.Drawing.Size(161, 33);
+            this.UploadFromXLS.TabIndex = 29;
+            this.UploadFromXLS.Text = "Upload from xls file";
+            this.UploadFromXLS.UseVisualStyleBackColor = true;
+            this.UploadFromXLS.Click += new System.EventHandler(this.UploadFromXLS_Click);
+            // 
             // Function
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(467, 315);
+            this.Controls.Add(this.UploadFromXLS);
+            this.Controls.Add(this.GenerateTxtFileData);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.muTB);
             this.Controls.Add(this.alfaTBvbn);
@@ -436,5 +460,7 @@
         private System.Windows.Forms.TextBox alfaTB;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox muTB;
+        private System.Windows.Forms.Button GenerateTxtFileData;
+        private System.Windows.Forms.Button UploadFromXLS;
     }
 }
