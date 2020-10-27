@@ -22,7 +22,7 @@ namespace Conway
         public decimal SusceptibleControllCount = 0.0m;
         public decimal RecoveredControllCount = 0.0m;
         public int infectedCells = 0;
-
+        public int infectedCellsC = 0;
         Function f;
         public int N1 = 0;        
         private List<CellStateVectorVM[,]> Cell;
@@ -51,7 +51,7 @@ namespace Conway
             DrawingPanel.Height = this.Height - PanelForSettings.Height;
 
         }
-        public CellStateVectorVM[,] Epidemia(CellStateVectorVM[,] ArrayStart)
+        public CellStateVectorVM[,] Epidemia(CellStateVectorVM[,] ArrayStart, ref int infectCells)
         {
            InfectedCount = 0.0m;
            SusceptibleCount = 0.0m;
@@ -59,7 +59,8 @@ namespace Conway
            InfectedControllCount = 0.0m;
            SusceptibleControllCount = 0.0m;
            RecoveredControllCount = 0.0m;
-        infectedCells = 0;
+           infectCells = 0;
+           
             //Algorithm of Cellular Automata Game 2D
             HeightField = f.HeightImg;
             WidthField = f.WidthImg;
@@ -80,7 +81,7 @@ namespace Conway
                 for (int j = 0; j < WidthField; j++)
                 {
                     epidemiaRecalcStart[i, j] = ArrayRecalculated(i, j, weightCoefficient, ArrayStart);
-                    infectedCells += epidemiaRecalcStart[i, j].Infected != 0 ? 1 : 0;
+                    infectCells += epidemiaRecalcStart[i, j].Infected != 0 ? 1 : 0;
                 }         
 
             return epidemiaRecalcStart;
@@ -171,8 +172,8 @@ namespace Conway
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), j * scale, i * scale, scale, scale);
 
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), j * scale, (i + HeightField) * scale + 10, scale, scale);
-                    flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), j * scale, (i + 2 * HeightField) * scale + 10, scale, scale);
-                    flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), j * scale, (i + 3 * HeightField) * scale + 10, scale, scale);
+                    flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), j * scale, (i + 2 * HeightField) * scale + 20, scale, scale);
+                    flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), j * scale, (i + 3 * HeightField) * scale + 30, scale, scale);
                 }
             if (C != null)
             {
@@ -186,8 +187,8 @@ namespace Conway
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + WidthField) * scale + 20, i * scale, scale, scale);
 
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + WidthField) * scale + 20, (i + HeightField) * scale + 10, scale, scale);
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + WidthField) * scale + 20, (i + 2*HeightField) * scale + 10, scale, scale);
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + WidthField) * scale + 20, (i + 3*HeightField) * scale + 10, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + WidthField) * scale + 20, (i + 2*HeightField) * scale + 20, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + WidthField) * scale + 20, (i + 3*HeightField) * scale + 30, scale, scale);
                     }
             }
           
@@ -207,6 +208,7 @@ namespace Conway
                 recoveredClbl.Text = $"{RecoveredControllCount * 100 / commonControlledRate}%";
             }
             infectedCellsTB.Text = infectedCells.ToString();
+            infectedCellsClbl.Text = infectedCellsC.ToString();
             //flagGraphics.DrawString($"Infected: {InfectedCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Red), scale, (2 * HeightField) * scale + 20);
             //flagGraphics.DrawString($"Susceptible: {SusceptibleCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Blue), scale, (2 * HeightField) * scale + 40);
             //flagGraphics.DrawString($"Recovered: {RecoveredCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Green), scale, (2 * HeightField) * scale + 60);
@@ -242,9 +244,11 @@ namespace Conway
             WidthField = f.WidthImg;
             var arrayToRecalculate = Cell[N1];//isControl && N1>2 ? FeedbackControl() : Cell[N1];
             var arrayControlled = N1 > 2 ? FeedbackControl() : Cell[N1];
-            Cell.Add(Epidemia(arrayToRecalculate));
-            CellControlled.Add(Epidemia(arrayControlled));
-            
+            var infectCells = 0;
+            Cell.Add(Epidemia(arrayToRecalculate, ref infectCells));
+            infectedCells = infectCells;
+            CellControlled.Add(Epidemia(arrayControlled, ref infectCells));
+            infectedCellsC = infectCells;
             N1 += 1;
             iteration += 1;
             IterationLabel.Text = iteration.ToString();

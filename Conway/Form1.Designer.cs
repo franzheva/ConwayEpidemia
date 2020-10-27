@@ -39,6 +39,17 @@
             this.IterationLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.PanelForSettings = new System.Windows.Forms.Panel();
+            this.infectedCellsClbl = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.recoveredClbl = new System.Windows.Forms.Label();
+            this.susceptibleClbl = new System.Windows.Forms.Label();
+            this.infectedClbl = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.rlbl = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.slbl = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.ilbl = new System.Windows.Forms.Label();
             this.infectedCellsTB = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.RecoveredRateLbl = new System.Windows.Forms.Label();
@@ -51,17 +62,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.Control_Label = new System.Windows.Forms.Label();
             this.DrawingPanel = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.recoveredClbl = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.susceptibleClbl = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.infectedClbl = new System.Windows.Forms.Label();
             this.PanelForSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -153,17 +153,17 @@
             // PanelForSettings
             // 
             this.PanelForSettings.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.PanelForSettings.Controls.Add(this.label2);
+            this.PanelForSettings.Controls.Add(this.infectedCellsClbl);
             this.PanelForSettings.Controls.Add(this.label7);
-            this.PanelForSettings.Controls.Add(this.label8);
-            this.PanelForSettings.Controls.Add(this.label9);
-            this.PanelForSettings.Controls.Add(this.label10);
-            this.PanelForSettings.Controls.Add(this.label11);
             this.PanelForSettings.Controls.Add(this.recoveredClbl);
-            this.PanelForSettings.Controls.Add(this.label13);
             this.PanelForSettings.Controls.Add(this.susceptibleClbl);
-            this.PanelForSettings.Controls.Add(this.label15);
             this.PanelForSettings.Controls.Add(this.infectedClbl);
+            this.PanelForSettings.Controls.Add(this.label11);
+            this.PanelForSettings.Controls.Add(this.rlbl);
+            this.PanelForSettings.Controls.Add(this.label13);
+            this.PanelForSettings.Controls.Add(this.slbl);
+            this.PanelForSettings.Controls.Add(this.label15);
+            this.PanelForSettings.Controls.Add(this.ilbl);
             this.PanelForSettings.Controls.Add(this.infectedCellsTB);
             this.PanelForSettings.Controls.Add(this.label5);
             this.PanelForSettings.Controls.Add(this.RecoveredRateLbl);
@@ -187,6 +187,124 @@
             this.PanelForSettings.Name = "PanelForSettings";
             this.PanelForSettings.Size = new System.Drawing.Size(1251, 104);
             this.PanelForSettings.TabIndex = 13;
+            // 
+            // infectedCellsClbl
+            // 
+            this.infectedCellsClbl.AutoSize = true;
+            this.infectedCellsClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infectedCellsClbl.ForeColor = System.Drawing.Color.Red;
+            this.infectedCellsClbl.Location = new System.Drawing.Point(955, 75);
+            this.infectedCellsClbl.Name = "infectedCellsClbl";
+            this.infectedCellsClbl.Size = new System.Drawing.Size(15, 16);
+            this.infectedCellsClbl.TabIndex = 33;
+            this.infectedCellsClbl.Text = "0";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Red;
+            this.label7.Location = new System.Drawing.Point(814, 75);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(137, 16);
+            this.label7.TabIndex = 32;
+            this.label7.Text = "Infected cells number:";
+            // 
+            // recoveredClbl
+            // 
+            this.recoveredClbl.AutoSize = true;
+            this.recoveredClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recoveredClbl.ForeColor = System.Drawing.Color.Green;
+            this.recoveredClbl.Location = new System.Drawing.Point(909, 49);
+            this.recoveredClbl.Name = "recoveredClbl";
+            this.recoveredClbl.Size = new System.Drawing.Size(15, 16);
+            this.recoveredClbl.TabIndex = 31;
+            this.recoveredClbl.Text = "0";
+            // 
+            // susceptibleClbl
+            // 
+            this.susceptibleClbl.AutoSize = true;
+            this.susceptibleClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.susceptibleClbl.ForeColor = System.Drawing.Color.Blue;
+            this.susceptibleClbl.Location = new System.Drawing.Point(909, 29);
+            this.susceptibleClbl.Name = "susceptibleClbl";
+            this.susceptibleClbl.Size = new System.Drawing.Size(15, 16);
+            this.susceptibleClbl.TabIndex = 30;
+            this.susceptibleClbl.Text = "0";
+            // 
+            // infectedClbl
+            // 
+            this.infectedClbl.AutoSize = true;
+            this.infectedClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infectedClbl.ForeColor = System.Drawing.Color.Red;
+            this.infectedClbl.Location = new System.Drawing.Point(909, 9);
+            this.infectedClbl.Name = "infectedClbl";
+            this.infectedClbl.Size = new System.Drawing.Size(15, 16);
+            this.infectedClbl.TabIndex = 29;
+            this.infectedClbl.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.Green;
+            this.label11.Location = new System.Drawing.Point(918, 49);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(0, 16);
+            this.label11.TabIndex = 28;
+            // 
+            // rlbl
+            // 
+            this.rlbl.AutoSize = true;
+            this.rlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rlbl.ForeColor = System.Drawing.Color.Green;
+            this.rlbl.Location = new System.Drawing.Point(814, 49);
+            this.rlbl.Name = "rlbl";
+            this.rlbl.Size = new System.Drawing.Size(91, 16);
+            this.rlbl.TabIndex = 27;
+            this.rlbl.Text = "Recovered C:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.Blue;
+            this.label13.Location = new System.Drawing.Point(918, 29);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(0, 16);
+            this.label13.TabIndex = 26;
+            // 
+            // slbl
+            // 
+            this.slbl.AutoSize = true;
+            this.slbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.slbl.ForeColor = System.Drawing.Color.Blue;
+            this.slbl.Location = new System.Drawing.Point(814, 29);
+            this.slbl.Name = "slbl";
+            this.slbl.Size = new System.Drawing.Size(94, 16);
+            this.slbl.TabIndex = 25;
+            this.slbl.Text = "Susceptible C:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.Red;
+            this.label15.Location = new System.Drawing.Point(918, 9);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(0, 16);
+            this.label15.TabIndex = 24;
+            // 
+            // ilbl
+            // 
+            this.ilbl.AutoSize = true;
+            this.ilbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ilbl.ForeColor = System.Drawing.Color.Red;
+            this.ilbl.Location = new System.Drawing.Point(814, 9);
+            this.ilbl.Name = "ilbl";
+            this.ilbl.Size = new System.Drawing.Size(70, 16);
+            this.ilbl.TabIndex = 23;
+            this.ilbl.Text = "Infected C:";
             // 
             // infectedCellsTB
             // 
@@ -313,124 +431,6 @@
             this.DrawingPanel.Size = new System.Drawing.Size(1251, 352);
             this.DrawingPanel.TabIndex = 14;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(955, 75);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(15, 16);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "0";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Red;
-            this.label7.Location = new System.Drawing.Point(814, 75);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(137, 16);
-            this.label7.TabIndex = 32;
-            this.label7.Text = "Infected cells number:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.Green;
-            this.label8.Location = new System.Drawing.Point(909, 49);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(15, 16);
-            this.label8.TabIndex = 31;
-            this.label8.Text = "0";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.Blue;
-            this.label9.Location = new System.Drawing.Point(909, 29);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(15, 16);
-            this.label9.TabIndex = 30;
-            this.label9.Text = "0";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.Red;
-            this.label10.Location = new System.Drawing.Point(909, 9);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(15, 16);
-            this.label10.TabIndex = 29;
-            this.label10.Text = "0";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.Green;
-            this.label11.Location = new System.Drawing.Point(918, 49);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(0, 16);
-            this.label11.TabIndex = 28;
-            // 
-            // recoveredClbl
-            // 
-            this.recoveredClbl.AutoSize = true;
-            this.recoveredClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recoveredClbl.ForeColor = System.Drawing.Color.Green;
-            this.recoveredClbl.Location = new System.Drawing.Point(814, 49);
-            this.recoveredClbl.Name = "recoveredClbl";
-            this.recoveredClbl.Size = new System.Drawing.Size(91, 16);
-            this.recoveredClbl.TabIndex = 27;
-            this.recoveredClbl.Text = "Recovered C:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.Blue;
-            this.label13.Location = new System.Drawing.Point(918, 29);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(0, 16);
-            this.label13.TabIndex = 26;
-            // 
-            // susceptibleClbl
-            // 
-            this.susceptibleClbl.AutoSize = true;
-            this.susceptibleClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.susceptibleClbl.ForeColor = System.Drawing.Color.Blue;
-            this.susceptibleClbl.Location = new System.Drawing.Point(814, 29);
-            this.susceptibleClbl.Name = "susceptibleClbl";
-            this.susceptibleClbl.Size = new System.Drawing.Size(94, 16);
-            this.susceptibleClbl.TabIndex = 25;
-            this.susceptibleClbl.Text = "Susceptible C:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(918, 9);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(0, 16);
-            this.label15.TabIndex = 24;
-            // 
-            // infectedClbl
-            // 
-            this.infectedClbl.AutoSize = true;
-            this.infectedClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.infectedClbl.ForeColor = System.Drawing.Color.Red;
-            this.infectedClbl.Location = new System.Drawing.Point(814, 9);
-            this.infectedClbl.Name = "infectedClbl";
-            this.infectedClbl.Size = new System.Drawing.Size(70, 16);
-            this.infectedClbl.TabIndex = 23;
-            this.infectedClbl.Text = "Infected C:";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -473,17 +473,17 @@
         private System.Windows.Forms.Label InfectedRateLbl;
         private System.Windows.Forms.Label infectedCellsTB;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label infectedCellsClbl;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label recoveredClbl;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label susceptibleClbl;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label infectedClbl;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label rlbl;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label slbl;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label ilbl;
     }
 }
 
