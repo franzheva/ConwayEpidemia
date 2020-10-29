@@ -426,6 +426,7 @@
             // 
             // DrawingPanel
             // 
+            this.DrawingPanel.AutoScroll = true;
             this.DrawingPanel.Location = new System.Drawing.Point(3, 110);
             this.DrawingPanel.Name = "DrawingPanel";
             this.DrawingPanel.Size = new System.Drawing.Size(1251, 352);

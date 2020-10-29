@@ -12,7 +12,7 @@ namespace Conway
         public int HeightField = 0; // field size  
         public int WidthField = 0;
         public int iteration = 0;
-        public int Tcycle = 30;
+        public int Tcycle = 10;
         public decimal Tetta = 512.0m;
         public decimal population = 0.0m;
         public decimal InfectedCount = 0.0m;
@@ -27,6 +27,7 @@ namespace Conway
         public int N1 = 0;        
         private List<CellStateVectorVM[,]> Cell;
         private List<CellStateVectorVM[,]> CellControlled;
+        private List<CellStateVectorVM[,]> CellSemiLinear;
         public CellStateVectorVM[,] SetInit;
 
         public bool isFirstLaunch = true;
@@ -146,16 +147,18 @@ namespace Conway
                 for (int j = 0; j < f.WidthImg; j++)                
                     SetInit[i, j] = init[i, j];
         }       
-        private void Print(CellStateVectorVM[,] A, CellStateVectorVM[,] C = null)
+        private void Print(CellStateVectorVM[,] A, CellStateVectorVM[,] C = null, CellStateVectorVM[,] CS = null)
         {
-            CreateBitmapAtRuntime(A,C);
+            CreateBitmapAtRuntime(A,C,CS);
         }        
-        public void CreateBitmapAtRuntime(CellStateVectorVM[,] A, CellStateVectorVM[,] C = null)
+        public void CreateBitmapAtRuntime(CellStateVectorVM[,] A, CellStateVectorVM[,] C = null, CellStateVectorVM[,] CS = null)
         {
             HeightField = f.HeightImg;
             WidthField = f.WidthImg;            
-            var scale = f.scale;            
-            pictureBox1.Size = new Size(WidthField * scale*5 + 30, HeightField*5 * scale + 20);            
+            var scale = f.scale; 
+            var size = new Size(WidthField * scale * 6 + 30, HeightField * 6 * scale + 50);
+            pictureBox1.Size = size;
+            //DrawingPanel.Size = size;            
             DrawingPanel.Controls.Add(pictureBox1);           
 
             Bitmap myAutomataField = new Bitmap((WidthField+10)*4 * scale, (HeightField+10) *3* scale);           
@@ -191,7 +194,23 @@ namespace Conway
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + WidthField) * scale + 20, (i + 3*HeightField) * scale + 30, scale, scale);
                     }
             }
-          
+            if (CS != null)
+            {
+                for (int j = 0; j < WidthField; j++)
+                    for (int i = 0; i < HeightField; i++)
+                    {
+                        int colorOfSusceptible = Convert.ToInt32((CS[i, j].Susceptible) * 255);
+                        int colorOfInfected = Convert.ToInt32((CS[i, j].Infected) * 255);
+                        int colorOfRecovered = Convert.ToInt32((CS[i, j].Recovered) * 255);
+
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + 2*WidthField) * scale + 30, i * scale, scale, scale);
+
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + 2*WidthField) * scale + 30, (i + HeightField) * scale + 10, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + 2*WidthField) * scale + 30, (i + 2 * HeightField) * scale + 20, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + 2*WidthField) * scale + 30, (i + 3 * HeightField) * scale + 30, scale, scale);
+                    }
+            }
+
 
             var commonRate = InfectedCount + SusceptibleCount + RecoveredCount;
             var commonControlledRate = InfectedControllCount + SusceptibleControllCount + RecoveredControllCount;
@@ -215,6 +234,120 @@ namespace Conway
 
 
             pictureBox1.Image = myAutomataField;           
+        }
+        public CellStateVectorVM[,] FeedBackControlSemiLinear()
+        {
+            var X_nonL = new List<CellStateVectorVM[,]>();
+            var X_L = new List<CellStateVectorVM[,]>();
+            var optCoeff = new List<decimal>();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                X_nonL.Add(CellSemiLinear[N1 - i * Tcycle + Tcycle]);
+                X_L.Add(CellSemiLinear[N1 - i * Tcycle + 1]);
+            }
+
+            optCoeff.Add(0.6327m);
+            optCoeff.Add(0.1211m);
+            optCoeff.Add(0.0676m);
+            optCoeff.Add(0.0466m);
+            optCoeff.Add(0.0354m);
+            optCoeff.Add(0.0284m);
+            optCoeff.Add(0.0237m);
+            optCoeff.Add(0.02m);
+            optCoeff.Add(0.0166m);
+            optCoeff.Add(0.0079m);
+            var gamma = 0.1m; var div = 19.0m;          
+
+            HeightField = f.HeightImg;
+            WidthField = f.WidthImg;
+
+            var Xn_average = new CellStateVectorVM[HeightField, WidthField];
+
+            var Xn_controled = new CellStateVectorVM[HeightField, WidthField];
+
+            for (int i = 0; i < HeightField; i++)
+                for (int j = 0; j < WidthField; j++)
+                {
+                    var infected = 0.0m;var susceptible = 0.0m;var recovered = 0.0m;
+                    for (int k = 0; k < 10; k++)
+                    {
+                        infected += optCoeff[k] * X_nonL[k][i, j].Infected;
+                        susceptible += optCoeff[k] * X_nonL[k][i, j].Susceptible;
+                        recovered += optCoeff[k] * X_nonL[k][i, j].Recovered;
+                    }
+                    Xn_average[i, j] = new CellStateVectorVM()
+                        {
+                            Infected = infected,
+                            Susceptible = susceptible,
+                            Recovered = recovered
+
+                        };
+                }
+
+            var Xl_average = new CellStateVectorVM[HeightField, WidthField];
+
+            for (int i = 0; i < HeightField; i++)
+                for (int j = 0; j < WidthField; j++)
+                {
+                    var infected = 0.0m; var susceptible = 0.0m; var recovered = 0.0m;
+                    for (int k = 0; k < 9; k++)
+                    {
+                        infected += 2 / div * X_nonL[k][i, j].Infected;
+                        susceptible += 2 / div * X_nonL[k][i, j].Susceptible;
+                        recovered += 2 / div * X_nonL[k][i, j].Recovered;
+                    }
+                    infected += 1 / div * X_nonL[9][i, j].Infected;
+                    susceptible += 1 / div * X_nonL[9][i, j].Susceptible;
+                    recovered += 1 / div * X_nonL[9][i, j].Recovered;
+                    Xn_average[i, j] = new CellStateVectorVM()
+                    {
+                        Infected = infected,
+                        Susceptible = susceptible,
+                        Recovered = recovered
+
+                    };                    
+                }
+            var infectCells = 0;
+            var temp = Epidemia(Xn_average,ref infectCells);
+
+            for (int i = 0; i < HeightField; i++)
+                for (int j = 0; j < WidthField; j++)
+                {
+                    Xn_controled[i, j] = new CellStateVectorVM()
+                    {
+                        Infected = (1 - gamma) * temp[i, j].Infected + gamma * Xl_average[i, j].Infected,
+                        Susceptible = (1 - gamma) * temp[i, j].Susceptible + gamma * Xl_average[i, j].Susceptible,
+                        Recovered = (1 - gamma) * temp[i, j].Recovered + gamma * Xl_average[i, j].Recovered
+                    };
+                }
+
+            return Xn_controled;           
+        }
+
+        public CellStateVectorVM[,] FeedBackLinear()
+        {
+            var Xn = CellSemiLinear[N1];
+            var Xn_1 = CellSemiLinear[N1 - 2];
+            
+            HeightField = f.HeightImg;
+            WidthField = f.WidthImg;
+            var div = 4.0m;
+            decimal a1 = 3/div; decimal a2 = 1/div; 
+
+            var Xn_average = new CellStateVectorVM[HeightField, WidthField];
+            var infC = 0;
+            for (int i = 0; i < HeightField; i++)
+                for (int j = 0; j < WidthField; j++)
+                {
+                    Xn_average[i, j] = new CellStateVectorVM()
+                    {
+                        Infected = a1 * CellSemiLinear[N1][i, j].Infected + a2 * CellSemiLinear[N1 - 2][i, j].Infected,
+                        Susceptible = a1 * CellSemiLinear[N1][i, j].Susceptible + a2 * CellSemiLinear[N1 - 2][i, j].Susceptible,
+                        Recovered = a1 * CellSemiLinear[N1][i, j].Recovered + a2 * CellSemiLinear[N1 - 2][i, j].Recovered,
+                    };
+                }
+            return Epidemia(Xn_average,ref infC);
         }
         public CellStateVectorVM[,] FeedbackControl()
         {
@@ -242,20 +375,27 @@ namespace Conway
         {
             HeightField = f.HeightImg;
             WidthField = f.WidthImg;
+            var infectCells = 0;
             var arrayToRecalculate = Cell[N1];//isControl && N1>2 ? FeedbackControl() : Cell[N1];
             var arrayControlled = N1 > 2 ? FeedbackControl() : Cell[N1];
-            var infectCells = 0;
+            var arraySemiControlled = N1 > Tcycle + 10 * Tcycle ? FeedBackLinear() : Epidemia(arrayToRecalculate, ref infectCells);
+            
+
             Cell.Add(Epidemia(arrayToRecalculate, ref infectCells));
             infectedCells = infectCells;
+
             CellControlled.Add(Epidemia(arrayControlled, ref infectCells));
             infectedCellsC = infectCells;
+
+            CellSemiLinear.Add(arraySemiControlled);
+
             N1 += 1;
             iteration += 1;
             IterationLabel.Text = iteration.ToString();
 
             PopulationEpidemiaCalculation(Cell[N1]);
 
-            Print(Cell[N1],CellControlled[N1]);
+            Print(Cell[N1],CellControlled[N1],CellSemiLinear[N1]);
             IterationLabel.Text = iteration.ToString();
         }
         private void startTimerButton_Click(object sender, EventArgs e)
@@ -266,9 +406,11 @@ namespace Conway
                 N1 = 0;
                 Cell = new List<CellStateVectorVM[,]>();
                 CellControlled = new List<CellStateVectorVM[,]>();
+                CellSemiLinear = new List<CellStateVectorVM[,]>();
                 Print(SetInit);
                 Cell.Add(SetInit);
                 CellControlled.Add(SetInit);
+                CellSemiLinear.Add(SetInit);
                 timer1.Enabled = true;
                 isFirstLaunch = false;
             }
