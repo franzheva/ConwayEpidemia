@@ -156,12 +156,12 @@ namespace Conway
             HeightField = f.HeightImg;
             WidthField = f.WidthImg;            
             var scale = f.scale; 
-            var size = new Size(WidthField * scale * 6 + 30, HeightField * 6 * scale + 50);
+            var size = new Size(WidthField * scale * 10 + 30, HeightField * 10 * scale + 50);
             pictureBox1.Size = size;
             //DrawingPanel.Size = size;            
             DrawingPanel.Controls.Add(pictureBox1);           
 
-            Bitmap myAutomataField = new Bitmap((WidthField+10)*4 * scale, (HeightField+10) *3* scale);           
+            Bitmap myAutomataField = new Bitmap((WidthField+10)*4 * scale, (HeightField+10) *4* scale);           
 
             Graphics flagGraphics = Graphics.FromImage(myAutomataField);
             
@@ -190,8 +190,8 @@ namespace Conway
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + WidthField) * scale + 20, i * scale, scale, scale);
 
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + WidthField) * scale + 20, (i + HeightField) * scale + 10, scale, scale);
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + WidthField) * scale + 20, (i + 2*HeightField) * scale + 20, scale, scale);
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + WidthField) * scale + 20, (i + 3*HeightField) * scale + 30, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + WidthField) * scale + 20, (i + 2 * HeightField) * scale + 20, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + WidthField) * scale + 20, (i + 3 * HeightField) * scale + 30, scale, scale);
                     }
             }
             if (CS != null)
@@ -203,11 +203,11 @@ namespace Conway
                         int colorOfInfected = Convert.ToInt32((CS[i, j].Infected) * 255);
                         int colorOfRecovered = Convert.ToInt32((CS[i, j].Recovered) * 255);
 
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + 2*WidthField) * scale + 30, i * scale, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + 2 * WidthField) * scale + 30, i * scale, scale, scale);
 
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + 2*WidthField) * scale + 30, (i + HeightField) * scale + 10, scale, scale);
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + 2*WidthField) * scale + 30, (i + 2 * HeightField) * scale + 20, scale, scale);
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + 2*WidthField) * scale + 30, (i + 3 * HeightField) * scale + 30, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + 2 * WidthField) * scale + 30, (i + HeightField) * scale + 10, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + 2 * WidthField) * scale + 30, (i + 2 * HeightField) * scale + 20, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + 2 * WidthField) * scale + 30, (i + 3 * HeightField) * scale + 30, scale, scale);
                     }
             }
 
