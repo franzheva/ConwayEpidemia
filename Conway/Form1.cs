@@ -341,7 +341,22 @@ namespace Conway
 
             return Xn_controled;           
         }
-
+        public CellStateVectorVM[,] FeedbackControl3()
+        {
+            var div = 3.0m; var a1 = 0.56m; var a2 = 0.33m; var a3 = 0.11m;
+            var recalc = new CellStateVectorVM[f.HeightImg, f.WidthImg];
+            for (int i = 0; i < f.HeightImg; i++)
+                for (int j = 0; j < f.WidthImg; j++)
+                {
+                    recalc[i, j] = new CellStateVectorVM()
+                    {
+                        Infected = a1 * CellControlled[N1][i, j].Infected + a2 * CellSemiLinear[N1 - 1][i, j].Infected + a3 * CellControlled[N1 - 2][i, j].Infected,
+                        Susceptible = a1 * CellControlled[N1][i, j].Susceptible + a2 * CellSemiLinear[N1 - 1][i, j].Susceptible + a3 * CellControlled[N1 - 2][i, j].Susceptible,
+                        Recovered = a1 * CellControlled[N1][i, j].Recovered + a2 * CellSemiLinear[N1 - 1][i, j].Recovered + a3 * CellControlled[N1 - 2][i, j].Recovered
+                    };
+                }
+            return recalc;
+        }
         public CellStateVectorVM[,] FeedBackLinear()
         {
             var Xn = CellSemiLinear[N1];
@@ -387,7 +402,7 @@ namespace Conway
             startTimerButton.Enabled = true;           
             f = new Function(this);                
             f.Show();           
-        }      
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
             HeightField = f.HeightImg;
@@ -403,17 +418,17 @@ namespace Conway
             CellControlled.Add(Epidemia(arrayControlled, ref infectCells));
             infectedCellsC = infectCells;
 
-            var arraySemiControlled = N1 > Tcycle + 10 * Tcycle ? FeedBackLinear() : Epidemia(arrayToRecalculate, ref infectCellsSemi);
+            var arraySemiControlled = N1 > 3 ? FeedbackControl3() : Cell[N1];//N1 > Tcycle + 10 * Tcycle ? FeedBackLinear(ref infectCellsSemi) : Epidemia(arrayToRecalculate, ref infectCellsSemi);
+            //
+            CellSemiLinear.Add(Epidemia(arraySemiControlled, ref infectCellsSemi));
             infectedCellsCS = infectCellsSemi;
-            CellSemiLinear.Add(arraySemiControlled);
-
             N1 += 1;
             iteration += 1;
             IterationLabel.Text = iteration.ToString();
 
             PopulationEpidemiaCalculation(Cell[N1]);
 
-            Print(Cell[N1],CellControlled[N1],CellSemiLinear[N1]);
+            Print(Cell[N1], CellControlled[N1], CellSemiLinear[N1]);
             IterationLabel.Text = iteration.ToString();
         }
         private void startTimerButton_Click(object sender, EventArgs e)
