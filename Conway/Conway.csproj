@@ -99,6 +99,7 @@
     <Compile Include="populationTCycleStatisticVM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpeedComparisonVM.cs" />
     <Compile Include="stash\stash.cs" />
     <EmbeddedResource Include="AddNewFunction.resx">
       <DependentUpon>AddNewFunction.cs</DependentUpon>

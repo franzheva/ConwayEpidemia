@@ -34,6 +34,8 @@ namespace Conway
         private List<CellStateVectorVM[,]> CellSemiLinear;
         public CellStateVectorVM[,] SetInit;
 
+        public List<SpeedComparisonVM> Speed = new List<SpeedComparisonVM>();
+
         public bool isFirstLaunch = true;
 
         public bool isControl = false;
@@ -245,10 +247,16 @@ namespace Conway
             infectedCellsClbl.Text = infectedCellsC.ToString();
             infectedCellsCSemilbl.Text = infectedCellsCS.ToString();
 
-            //flagGraphics.DrawString($"Infected: {InfectedCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Red), scale, (2 * HeightField) * scale + 20);
-            //flagGraphics.DrawString($"Susceptible: {SusceptibleCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Blue), scale, (2 * HeightField) * scale + 40);
-            //flagGraphics.DrawString($"Recovered: {RecoveredCount.ToString()}", new Font("Microsoft Sans Serif", 20, GraphicsUnit.Point), new SolidBrush(Color.Green), scale, (2 * HeightField) * scale + 60);
-
+            if (iteration != 0)
+                Speed.Add(new SpeedComparisonVM()
+                {
+                    InfectionSpeed = infectedCells != WidthField * HeightField ? (decimal?)(Math.Sqrt(infectedCells / Math.PI)) / iteration : null,
+                    InfectionSpeedTwoDaysQuarantine = infectedCellsC != WidthField * HeightField ? (decimal?)(Math.Sqrt(infectedCellsC / Math.PI)) / iteration : null,
+                    InfectionSpeedThreeDaysQuarantine = infectedCellsCS != WidthField * HeightField ? (decimal?)(Math.Sqrt(infectedCellsCS / Math.PI)) / iteration : null,
+                    InfectionPercentage = commonRate != 0 ? InfectedCount * 100 / commonRate : 0,
+                    InfectionPercentageTwoDaysQuarantine = commonControlledRate != 0 ? InfectedControllCount * 100 / commonControlledRate : 0,
+                    InfectionPercentageThreeDaysQuarantine = commonSemiControlledRate != 0 ? InfectedSemiControllCount * 100 / commonSemiControlledRate : 0
+                });
 
             pictureBox1.Image = myAutomataField;           
         }
@@ -399,9 +407,10 @@ namespace Conway
         }
         private void funcSet_Click(object sender, EventArgs e)
         {
-            startTimerButton.Enabled = true;           
-            f = new Function(this);                
-            f.Show();           
+            startTimerButton.Enabled = true;
+            isFirstLaunch = true;
+            f = new Function(this);
+            f.Show();
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -427,7 +436,7 @@ namespace Conway
             IterationLabel.Text = iteration.ToString();
 
             PopulationEpidemiaCalculation(Cell[N1]);
-
+            
             Print(Cell[N1], CellControlled[N1], CellSemiLinear[N1]);
             IterationLabel.Text = iteration.ToString();
         }
@@ -440,10 +449,13 @@ namespace Conway
                 Cell = new List<CellStateVectorVM[,]>();
                 CellControlled = new List<CellStateVectorVM[,]>();
                 CellSemiLinear = new List<CellStateVectorVM[,]>();
+                iteration = 0;
+
                 Print(SetInit);
                 Cell.Add(SetInit);
                 CellControlled.Add(SetInit);
                 CellSemiLinear.Add(SetInit);
+
                 timer1.Enabled = true;
                 isFirstLaunch = false;
             }
@@ -463,20 +475,7 @@ namespace Conway
         private void Form1_Resize(object sender, EventArgs e)
         {
             PanelForSettings_Position();
-        }
-        public void PopulationCalculation(decimal[,] Data)
-        {
-            var data = Data;
-            
-            for (int i = 0; i < f.HeightImg; i++)
-                for (int j = 0; j < f.WidthImg; j++)
-                    population += data[i, j];
-           
-            var avrPopulation = population / (f.HeightImg * f.WidthImg);                   
-            PopulationLabel.Text = population.ToString();
-            AveragePopulationLbl.Text = avrPopulation.ToString();            
-            
-        }
+        }        
         public void PopulationEpidemiaCalculation(CellStateVectorVM[,] Data)
         {
             var data = Data;
@@ -490,9 +489,9 @@ namespace Conway
                     InfectedControllCount += CellControlled[N1][i, j].Infected;
                     SusceptibleControllCount += CellControlled[N1][i, j].Susceptible;
                     RecoveredControllCount += CellControlled[N1][i, j].Recovered;
-                    InfectedSemiControllCount += CellControlled[N1][i, j].Infected;
-                    SusceptibleSemiControllCount += CellControlled[N1][i, j].Susceptible;
-                    RecoveredSemiControllCount += CellControlled[N1][i, j].Recovered;
+                    InfectedSemiControllCount += CellSemiLinear[N1][i, j].Infected;
+                    SusceptibleSemiControllCount += CellSemiLinear[N1][i, j].Susceptible;
+                    RecoveredSemiControllCount += CellSemiLinear[N1][i, j].Recovered;
                 }            
         }
         public void WriteLog(CellStateVectorVM[,] logArray)
@@ -512,6 +511,44 @@ namespace Conway
             wb.Worksheets.Add(CA_dt).Columns().AdjustToContents();
 
             wb.SaveAs($"../../Uploads/logs/initdata{DateTime.Now.Date.ToString("ddMMyy")}.xlsx");
+        }
+
+        public void ComparisonAnalysis()
+        {
+            var wb = new XLWorkbook();           
+           
+            for (int k = 0; k < 3; k++)
+            {
+                var speed = new System.Data.DataTable(k == 0 ? "Infection Speed"
+                    : k == 1 ? "IS 2 Days Quarantine" : "IS 3 Days Quarantine");
+                speed.Columns.Add("Iteration");
+                speed.Columns.Add("Infection Speed");
+                speed.Columns.Add(string.Empty);
+                speed.Columns.Add("IterationP");
+                speed.Columns.Add("Infection Percentage");
+
+                for (int i = 0; i < iteration; i++)
+                {
+                    var speedVal = k == 0 ? Speed[i].InfectionSpeed : k == 1 ? Speed[i].InfectionSpeedTwoDaysQuarantine
+                        : Speed[i].InfectionSpeedThreeDaysQuarantine;
+                    var dr = speed.NewRow();
+                    dr[1] = speedVal;
+                    dr[0] = speedVal != null ? i.ToString() : null;
+                    dr[3] = i;
+                    dr[4] = k == 0 ? Speed[i].InfectionPercentage : k == 1 ? Speed[i].InfectionPercentageTwoDaysQuarantine
+                        : Speed[i].InfectionPercentageThreeDaysQuarantine;
+                    speed.Rows.Add(dr);
+                }
+                wb.Worksheets.Add(speed).Columns().AdjustToContents();
+
+            }
+
+            wb.SaveAs($"../../Uploads/logs/Comparison Analysis{DateTime.Now.ToString()}.xlsx");             
+        }
+
+        private void ExportPopDataBtn_Click(object sender, EventArgs e)
+        {
+            ComparisonAnalysis();
         }
     }
 }
