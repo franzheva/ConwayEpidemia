@@ -12,7 +12,7 @@ namespace Conway
         public int HeightField = 0; // field size  
         public int WidthField = 0;
         public int iteration = 0;
-        public int Tcycle = 10;
+        public int Tcycle = 2;
         public decimal Tetta = 512.0m;
         public decimal population = 0.0m;
         public decimal InfectedCount = 0.0m;
@@ -178,12 +178,14 @@ namespace Conway
                 for (int i = 0; i < HeightField; i++)
                 {
                     int colorOfSusceptible = Convert.ToInt32((A[i, j].Susceptible) * 255);
-                    int colorOfInfected = Convert.ToInt32((A[i, j].Infected) * 255);
+                    int colorOfInfected = Convert.ToInt32((1-A[i, j].Infected) * 255);
                     int colorOfRecovered = Convert.ToInt32((A[i, j].Recovered) * 255);
 
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), j * scale, i * scale, scale, scale);
-
-                    flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), j * scale, (i + HeightField) * scale + 10, scale, scale);
+                    
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfInfected, colorOfInfected)),
+                                j * scale, (i + HeightField) * scale + 10, scale, scale);
+                    
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), j * scale, (i + 2 * HeightField) * scale + 20, scale, scale);
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), j * scale, (i + 3 * HeightField) * scale + 30, scale, scale);
                 }
@@ -193,12 +195,14 @@ namespace Conway
                     for (int i = 0; i < HeightField; i++)
                     {
                         int colorOfSusceptible = Convert.ToInt32((C[i, j].Susceptible) * 255);
-                        int colorOfInfected = Convert.ToInt32((C[i, j].Infected) * 255);
+                        int colorOfInfected = Convert.ToInt32((1-C[i, j].Infected) * 255);
                         int colorOfRecovered = Convert.ToInt32((C[i, j].Recovered) * 255);
 
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + WidthField) * scale + 10, i * scale, scale, scale);
-
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + WidthField) * scale + 10, (i + HeightField) * scale + 10, scale, scale);
+                      
+                       
+                       
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfInfected, colorOfInfected)), (j + WidthField) * scale + 10, (i + HeightField) * scale + 10, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + WidthField) * scale + 10, (i + 2 * HeightField) * scale + 20, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + WidthField) * scale + 10, (i + 3 * HeightField) * scale + 30, scale, scale);
                     }
@@ -209,12 +213,13 @@ namespace Conway
                     for (int i = 0; i < HeightField; i++)
                     {
                         int colorOfSusceptible = Convert.ToInt32((CS[i, j].Susceptible) * 255);
-                        int colorOfInfected = Convert.ToInt32((CS[i, j].Infected) * 255);
+                        int colorOfInfected = Convert.ToInt32((1-CS[i, j].Infected) * 255);
                         int colorOfRecovered = Convert.ToInt32((CS[i, j].Recovered) * 255);
 
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + 2 * WidthField) * scale + 20, i * scale, scale, scale);
-
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + 2 * WidthField) * scale + 20, (i + HeightField) * scale + 10, scale, scale);
+                       
+                        
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfInfected, colorOfInfected)), (j + 2 * WidthField) * scale + 20, (i + HeightField) * scale + 10, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + 2 * WidthField) * scale + 20, (i + 2 * HeightField) * scale + 20, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + 2 * WidthField) * scale + 20, (i + 3 * HeightField) * scale + 30, scale, scale);
                     }
@@ -365,7 +370,8 @@ namespace Conway
                 }
             return recalc;
         }
-        public CellStateVectorVM[,] FeedBackLinear()
+
+        public CellStateVectorVM[,] FeedBackLinear(ref int infected)
         {
             var Xn = CellSemiLinear[N1];
             var Xn_1 = CellSemiLinear[N1 - 2];
@@ -387,7 +393,9 @@ namespace Conway
                         Recovered = a1 * CellSemiLinear[N1][i, j].Recovered + a2 * CellSemiLinear[N1 - 2][i, j].Recovered,
                     };
                 }
-            return Epidemia(Xn_average,ref infC);
+            var res = Epidemia(Xn_average,ref infC);
+            infected = infC;
+            return res;
         }
         public CellStateVectorVM[,] FeedbackControl()
         {
@@ -404,6 +412,39 @@ namespace Conway
                     };
                 }
             return recalc;
+        }
+        public CellStateVectorVM[,] PredicativeControl()
+        {
+            //let's cycle equals 2 T=2
+            Tetta = 4.15m * (decimal)Math.Pow(10, 7);//(decimal) Math.Pow(2,9);
+            HeightField = f.HeightImg;
+            WidthField = f.WidthImg;
+            //int CAsize = f.fieldSize;
+            decimal div = 3.0m; decimal Epsilon = 0.000000000001m;
+            decimal a1 = Tetta / (1 + Tetta); decimal a2 = 1 / (1 + Tetta);
+            var Xn_predicative = new CellStateVectorVM[HeightField, WidthField];
+            var Xn_predicativeTemporary = Cell[N1];
+            var Xn_controled = new CellStateVectorVM[HeightField, WidthField];
+            var infectedCount = 0;
+            //Calculating for predicative part of control
+            for (int p = 0; p < Tcycle; p++)
+            {
+                Xn_predicative = Epidemia(Xn_predicativeTemporary, ref infectedCount);
+                Xn_predicativeTemporary = Xn_predicative;
+            }
+            //calculating control body for main function
+
+            for (int i = 0; i < HeightField; i++)
+                for (int j = 0; j < WidthField; j++)
+                {
+                    Xn_controled[i, j] = new CellStateVectorVM()
+                    {
+                        Infected = a1 * Cell[N1][i, j].Infected + a2 * Xn_predicative[i, j].Infected,
+                        Susceptible = a1 * Cell[N1][i, j].Susceptible + a2 * Xn_predicative[i, j].Susceptible,
+                        Recovered = a1 * Cell[N1][i, j].Recovered + a2 * Xn_predicative[i, j].Recovered
+                    };
+                }
+            return Xn_controled;
         }
         private void funcSet_Click(object sender, EventArgs e)
         {
@@ -428,8 +469,9 @@ namespace Conway
             infectedCellsC = infectCells;
 
             var arraySemiControlled = N1 > 3 ? FeedbackControl3() : Cell[N1];//N1 > Tcycle + 10 * Tcycle ? FeedBackLinear(ref infectCellsSemi) : Epidemia(arrayToRecalculate, ref infectCellsSemi);
-            //
+            //FeedbackControl3()
             CellSemiLinear.Add(Epidemia(arraySemiControlled, ref infectCellsSemi));
+            //var arraySemiControlled = N1 > Tcycle + 10 * Tcycle ? FeedBackLinear(ref infectCellsSemi) : Epidemia(arrayToRecalculate, ref infectCellsSemi);
             infectedCellsCS = infectCellsSemi;
             N1 += 1;
             iteration += 1;
@@ -543,7 +585,7 @@ namespace Conway
 
             }
 
-            wb.SaveAs($"../../Uploads/logs/Comparison Analysis{DateTime.Now.ToString()}.xlsx");             
+            wb.SaveAs($"../../Uploads/logs/Comparison Analysis.xlsx");             
         }
 
         private void ExportPopDataBtn_Click(object sender, EventArgs e)

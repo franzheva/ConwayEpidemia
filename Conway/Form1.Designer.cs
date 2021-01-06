@@ -333,7 +333,7 @@
             this.infectedCellsClbl.AutoSize = true;
             this.infectedCellsClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.infectedCellsClbl.ForeColor = System.Drawing.Color.Red;
-            this.infectedCellsClbl.Location = new System.Drawing.Point(803, 73);
+            this.infectedCellsClbl.Location = new System.Drawing.Point(826, 73);
             this.infectedCellsClbl.Name = "infectedCellsClbl";
             this.infectedCellsClbl.Size = new System.Drawing.Size(15, 16);
             this.infectedCellsClbl.TabIndex = 33;
@@ -344,7 +344,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Red;
-            this.label7.Location = new System.Drawing.Point(662, 73);
+            this.label7.Location = new System.Drawing.Point(685, 73);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(137, 16);
             this.label7.TabIndex = 32;
@@ -355,7 +355,7 @@
             this.recoveredClbl.AutoSize = true;
             this.recoveredClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recoveredClbl.ForeColor = System.Drawing.Color.Green;
-            this.recoveredClbl.Location = new System.Drawing.Point(757, 47);
+            this.recoveredClbl.Location = new System.Drawing.Point(780, 47);
             this.recoveredClbl.Name = "recoveredClbl";
             this.recoveredClbl.Size = new System.Drawing.Size(15, 16);
             this.recoveredClbl.TabIndex = 31;
@@ -366,7 +366,7 @@
             this.susceptibleClbl.AutoSize = true;
             this.susceptibleClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.susceptibleClbl.ForeColor = System.Drawing.Color.Blue;
-            this.susceptibleClbl.Location = new System.Drawing.Point(757, 27);
+            this.susceptibleClbl.Location = new System.Drawing.Point(780, 27);
             this.susceptibleClbl.Name = "susceptibleClbl";
             this.susceptibleClbl.Size = new System.Drawing.Size(15, 16);
             this.susceptibleClbl.TabIndex = 30;
@@ -377,7 +377,7 @@
             this.infectedClbl.AutoSize = true;
             this.infectedClbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.infectedClbl.ForeColor = System.Drawing.Color.Red;
-            this.infectedClbl.Location = new System.Drawing.Point(757, 7);
+            this.infectedClbl.Location = new System.Drawing.Point(780, 7);
             this.infectedClbl.Name = "infectedClbl";
             this.infectedClbl.Size = new System.Drawing.Size(15, 16);
             this.infectedClbl.TabIndex = 29;
@@ -388,7 +388,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Green;
-            this.label11.Location = new System.Drawing.Point(766, 47);
+            this.label11.Location = new System.Drawing.Point(789, 47);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(0, 16);
             this.label11.TabIndex = 28;
@@ -398,7 +398,7 @@
             this.rlbl.AutoSize = true;
             this.rlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rlbl.ForeColor = System.Drawing.Color.Green;
-            this.rlbl.Location = new System.Drawing.Point(662, 47);
+            this.rlbl.Location = new System.Drawing.Point(685, 47);
             this.rlbl.Name = "rlbl";
             this.rlbl.Size = new System.Drawing.Size(91, 16);
             this.rlbl.TabIndex = 27;
@@ -409,7 +409,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Blue;
-            this.label13.Location = new System.Drawing.Point(766, 27);
+            this.label13.Location = new System.Drawing.Point(789, 27);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(0, 16);
             this.label13.TabIndex = 26;
@@ -419,7 +419,7 @@
             this.slbl.AutoSize = true;
             this.slbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.slbl.ForeColor = System.Drawing.Color.Blue;
-            this.slbl.Location = new System.Drawing.Point(662, 27);
+            this.slbl.Location = new System.Drawing.Point(685, 27);
             this.slbl.Name = "slbl";
             this.slbl.Size = new System.Drawing.Size(94, 16);
             this.slbl.TabIndex = 25;
@@ -430,7 +430,7 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(766, 7);
+            this.label15.Location = new System.Drawing.Point(789, 7);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(0, 16);
             this.label15.TabIndex = 24;
@@ -440,7 +440,7 @@
             this.ilbl.AutoSize = true;
             this.ilbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ilbl.ForeColor = System.Drawing.Color.Red;
-            this.ilbl.Location = new System.Drawing.Point(662, 7);
+            this.ilbl.Location = new System.Drawing.Point(685, 7);
             this.ilbl.Name = "ilbl";
             this.ilbl.Size = new System.Drawing.Size(70, 16);
             this.ilbl.TabIndex = 23;
