@@ -98,6 +98,25 @@ namespace Conway
         }       
         public CellStateVectorVM ArrayRecalculated(int i, int j, decimal [] innerCode, CellStateVectorVM[,] array)
         {
+            if (f.currentSeparate)
+            {
+                var muab = new decimal[innerCode.Length-1];
+                //stohastic weight coefficients for neighbours: NeighbourPopulation/CurrentCellPopoulation
+                muab[0] = GetCellPopulation(array[(i - 1) != -1 ? (i - 1) : (HeightField - 1), (j - 1) != -1 ? (j - 1) : (WidthField - 1)])/ GetCellPopulation(array[i, j]);
+                muab[1] = GetCellPopulation(array[(i - 1) != -1 ? (i - 1) : (HeightField - 1), j])/GetCellPopulation(array[i, j]);
+                muab[2] = GetCellPopulation(array[(i - 1) != -1 ? (i - 1) : (HeightField - 1), (j + 1) != WidthField ? (j + 1) : 0])/ GetCellPopulation(array[i, j]);
+                muab[7] = GetCellPopulation(array[i, (j - 1) != -1 ? (j - 1) : (WidthField - 1)])/ GetCellPopulation(array[i, j]);
+                muab[3] = GetCellPopulation(array[i, (j + 1) != WidthField ? (j + 1) : 0])/ GetCellPopulation(array[i, j]);
+                muab[6] = GetCellPopulation(array[(i + 1) != HeightField ? (i + 1) : 0, (j - 1) != -1 ? (j - 1) : (WidthField - 1)])/ GetCellPopulation(array[i, j]);
+                muab[5] = GetCellPopulation(array[(i + 1) != HeightField ? (i + 1) : 0, j])/ GetCellPopulation(array[i, j]);
+                muab[4] = GetCellPopulation(array[(i + 1) != HeightField ? (i + 1) : 0, (j + 1) != WidthField ? (j + 1) : 0])/ GetCellPopulation(array[i, j]);                
+
+                //Normalization of WC
+                var sumOfWC = 0.0m;
+                foreach (var item in muab) { sumOfWC += item; }
+
+                for (int k = 0; k < innerCode.Length - 1; k++) innerCode[k] = muab[k] / sumOfWC;
+            }
             HeightField = f.HeightImg;
             WidthField = f.WidthImg;
             var infectedWithNeighbours = innerCode[0] * array[(i - 1) != -1 ? (i - 1) : (HeightField - 1), (j - 1) != -1 ? (j - 1) : (WidthField - 1)].Infected +
@@ -116,6 +135,10 @@ namespace Conway
                 Susceptible = array[i, j].Susceptible + f.mu* array[i, j].Recovered - infectedSusceptible,
                 Recovered = (1-f.mu)*array[i, j].Recovered + f.epsilon * array[i, j].Infected
             }; 
+        }
+        public decimal GetCellPopulation(CellStateVectorVM cell)
+        {
+            return cell.Infected + cell.Recovered + cell.Susceptible;
         }
         public decimal Func(decimal y, decimal x)
         {
@@ -178,14 +201,12 @@ namespace Conway
                 for (int i = 0; i < HeightField; i++)
                 {
                     int colorOfSusceptible = Convert.ToInt32((A[i, j].Susceptible) * 255);
-                    int colorOfInfected = Convert.ToInt32((1-A[i, j].Infected) * 255);
+                    int colorOfInfected = Convert.ToInt32((A[i, j].Infected) * 255);
                     int colorOfRecovered = Convert.ToInt32((A[i, j].Recovered) * 255);
 
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), j * scale, i * scale, scale, scale);
-                    
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfInfected, colorOfInfected)),
-                                j * scale, (i + HeightField) * scale + 10, scale, scale);
-                    
+                    flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), j * scale, (i + HeightField) * scale + 10, scale, scale);
+
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), j * scale, (i + 2 * HeightField) * scale + 20, scale, scale);
                     flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), j * scale, (i + 3 * HeightField) * scale + 30, scale, scale);
                 }
@@ -195,14 +216,11 @@ namespace Conway
                     for (int i = 0; i < HeightField; i++)
                     {
                         int colorOfSusceptible = Convert.ToInt32((C[i, j].Susceptible) * 255);
-                        int colorOfInfected = Convert.ToInt32((1-C[i, j].Infected) * 255);
+                        int colorOfInfected = Convert.ToInt32((C[i, j].Infected) * 255);
                         int colorOfRecovered = Convert.ToInt32((C[i, j].Recovered) * 255);
 
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + WidthField) * scale + 10, i * scale, scale, scale);
-                      
-                       
-                       
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfInfected, colorOfInfected)), (j + WidthField) * scale + 10, (i + HeightField) * scale + 10, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + WidthField) * scale + 10, (i + HeightField) * scale + 10, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + WidthField) * scale + 10, (i + 2 * HeightField) * scale + 20, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + WidthField) * scale + 10, (i + 3 * HeightField) * scale + 30, scale, scale);
                     }
@@ -213,13 +231,11 @@ namespace Conway
                     for (int i = 0; i < HeightField; i++)
                     {
                         int colorOfSusceptible = Convert.ToInt32((CS[i, j].Susceptible) * 255);
-                        int colorOfInfected = Convert.ToInt32((1-CS[i, j].Infected) * 255);
+                        int colorOfInfected = Convert.ToInt32((CS[i, j].Infected) * 255);
                         int colorOfRecovered = Convert.ToInt32((CS[i, j].Recovered) * 255);
 
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfRecovered, colorOfSusceptible)), (j + 2 * WidthField) * scale + 20, i * scale, scale, scale);
-                       
-                        
-                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, colorOfInfected, colorOfInfected)), (j + 2 * WidthField) * scale + 20, (i + HeightField) * scale + 10, scale, scale);
+                        flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(colorOfInfected, 0, 0)), (j + 2 * WidthField) * scale + 20, (i + HeightField) * scale + 10, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, colorOfSusceptible)), (j + 2 * WidthField) * scale + 20, (i + 2 * HeightField) * scale + 20, scale, scale);
                         flagGraphics.FillRectangle(new SolidBrush(Color.FromArgb(0, colorOfRecovered, 0)), (j + 2 * WidthField) * scale + 20, (i + 3 * HeightField) * scale + 30, scale, scale);
                     }

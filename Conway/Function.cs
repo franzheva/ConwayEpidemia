@@ -137,7 +137,7 @@ namespace Conway
             else
             {
                 MessageBox.Show("Random Initial Data will be applied");
-                mainForm.SetInitial();
+               // mainForm.SetInitial();
             }
            
             mainForm.isFirstLaunch = true;            
@@ -263,6 +263,7 @@ namespace Conway
             {
                 for (int i = 0; i < 9; i++)
                     tb[i].Text = "1";
+                tb[8].Text = "0";
                 currentSeparate = true;
             }
             else {
